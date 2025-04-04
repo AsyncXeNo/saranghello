@@ -50,9 +50,9 @@ async def main() -> None:
                 await asyncio.to_thread(driver.get, url)
 
                 try:
-                    collection = url.split('collections/')[1].split('/')[0]
+                    collections = [url.split('collections/')[1].split('/')[0]]
                 except IndexError:
-                    collection = None
+                    collections = []
 
                 title = driver.find_element(By.CSS_SELECTOR, '.product-single__title').get_attribute('innerText').strip()
 
@@ -71,7 +71,7 @@ async def main() -> None:
                     if images[i].startswith('//'):
                         images[i] = 'https:' + images[i]
 
-                description = driver.find_element(By.CSS_SELECTOR, '.product-single__description').get_attribute('innerHTML').strip()
+                description = driver.find_element(By.CSS_SELECTOR, '.product-single__description').get_attribute('innerText').strip()
 
                 variant_inputs = driver.find_elements(By.CSS_SELECTOR, '.variant-input')
                 variant_info = []
@@ -94,7 +94,7 @@ async def main() -> None:
                 data.append({
                     'url': url,
                     'title': title,
-                    'collection': collection,
+                    'collections': collections,
                     'price': price,
                     'main_image': main_image,
                     'images': images,
