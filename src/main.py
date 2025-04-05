@@ -77,7 +77,7 @@ async def main() -> None:
                 variant_info = []
                 for variant_input in variant_inputs:
                     variant_input.click()
-                    time.sleep(0.2)
+                    time.sleep(1)
                     try:
                         variant_price = float(driver.find_element(By.CSS_SELECTOR, '.product-single__prices .sale-price').get_attribute('innerText').replace('$', '').replace(',', '').strip())
                     except Exception:
