@@ -57,11 +57,14 @@ async def main() -> None:
                 title = driver.find_element(By.CSS_SELECTOR, '.product-single__title').get_attribute('innerText').strip()
 
                 try:
-                    price = float(driver.find_element(By.CSS_SELECTOR, '.product-single__prices .sale-price').get_attribute('innerText').replace('$', '').replace(',', '').strip())
+                    price = float(driver.find_element(By.CSS_SELECTOR, '.product-single__prices .sale-price').get_attribute('innerText').replace('$', '').replace('Rs.', '').replace(',', '').strip())
                 except Exception:
-                    price = float(driver.find_element(By.CSS_SELECTOR, '.product-single__prices .product__price').get_attribute('innerText').replace('$', '').replace(',', '').strip())
+                    price = float(driver.find_element(By.CSS_SELECTOR, '.product-single__prices .product__price').get_attribute('innerText').replace('$', '').replace('Rs.', '').replace(',', '').strip())
                 
-                main_image = driver.find_element(By.CSS_SELECTOR, '.product__slide.slick-active img').get_attribute('data-photoswipe-src')
+                try:
+                    main_image = driver.find_element(By.CSS_SELECTOR, '.product__slide.slick-active img').get_attribute('data-photoswipe-src')
+                except Exception:
+                    main_image = driver.find_element(By.CSS_SELECTOR, '.product__slide img').get_attribute('data-photoswipe-src')
                 if main_image.startswith('//'): 
                     main_image = 'https:' + main_image
                 
@@ -79,10 +82,13 @@ async def main() -> None:
                     variant_input.click()
                     time.sleep(1)
                     try:
-                        variant_price = float(driver.find_element(By.CSS_SELECTOR, '.product-single__prices .sale-price').get_attribute('innerText').replace('$', '').replace(',', '').strip())
+                        variant_price = float(driver.find_element(By.CSS_SELECTOR, '.product-single__prices .sale-price').get_attribute('innerText').replace('$', '').replace('Rs.', '').replace(',', '').strip())
                     except Exception:
-                        variant_price = float(driver.find_element(By.CSS_SELECTOR, '.product-single__prices .product__price').get_attribute('innerText').replace('$', '').replace(',', '').strip())
-                    variant_image = driver.find_element(By.CSS_SELECTOR, '.product__slide.slick-active img').get_attribute('data-photoswipe-src')
+                        variant_price = float(driver.find_element(By.CSS_SELECTOR, '.product-single__prices .product__price').get_attribute('innerText').replace('$', '').replace('Rs.', '').replace(',', '').strip())
+                    try:
+                        variant_image = driver.find_element(By.CSS_SELECTOR, '.product__slide.slick-active img').get_attribute('data-photoswipe-src')
+                    except Exception:
+                        variant_image = driver.find_element(By.CSS_SELECTOR, '.product__slide img').get_attribute('data-photoswipe-src')
                     if variant_image.startswith('//'):
                         variant_image = 'https:' + variant_image
                     variant_info.append({
