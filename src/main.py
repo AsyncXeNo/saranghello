@@ -59,7 +59,7 @@ async def main() -> None:
                 try:
                     price = float(driver.find_element(By.CSS_SELECTOR, '.product-single__prices .sale-price').get_attribute('innerText').replace('$', '').replace('Rs.', '').replace(',', '').strip())
                 except Exception:
-                    price = float(driver.find_element(By.CSS_SELECTOR, '.product-single__prices .product__price').get_attribute('innerText').replace('$', '').replace('Rs.', '').replace(',', '').strip())
+                    price = float(driver.find_elements(By.CSS_SELECTOR, '.product-single__prices .product__price')[-1].get_attribute('innerText').replace('$', '').replace('Rs.', '').replace(',', '').strip())
                 
                 try:
                     main_image = driver.find_element(By.CSS_SELECTOR, '.product__slide.slick-active img').get_attribute('data-photoswipe-src')
@@ -84,7 +84,7 @@ async def main() -> None:
                     try:
                         variant_price = float(driver.find_element(By.CSS_SELECTOR, '.product-single__prices .sale-price').get_attribute('innerText').replace('$', '').replace('Rs.', '').replace(',', '').strip())
                     except Exception:
-                        variant_price = float(driver.find_element(By.CSS_SELECTOR, '.product-single__prices .product__price').get_attribute('innerText').replace('$', '').replace('Rs.', '').replace(',', '').strip())
+                        variant_price = float(driver.find_elements(By.CSS_SELECTOR, '.product-single__prices .product__price')[-1].get_attribute('innerText').replace('$', '').replace('Rs.', '').replace(',', '').strip())
                     try:
                         variant_image = driver.find_element(By.CSS_SELECTOR, '.product__slide.slick-active img').get_attribute('data-photoswipe-src')
                     except Exception:
